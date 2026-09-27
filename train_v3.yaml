@@ -1,0 +1,38 @@
+### model
+model_name_or_path: /root/.cache/modelscope/models/Qwen--Qwen2.5-7B-Instruct/snapshots/master
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z3_opt_offload.json
+gradient_checkpointing: true
+
+### dataset
+dataset: psy_elder_v3
+template: qwen
+cutoff_len: 3072
+max_samples: 100000
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/qwen25-7b/full/sft_v3
+logging_steps: 10
+save_steps: 50
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 5.0e-5
+num_train_epochs: 2.0
+lr_scheduler_type: linear
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
